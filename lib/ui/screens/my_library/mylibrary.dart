@@ -1,4 +1,6 @@
+import 'package:ebooks4mm/ui/epub_reader/main_reader.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyLibraryScreen extends StatelessWidget {
   const MyLibraryScreen({super.key});
@@ -19,46 +21,52 @@ class MyLibraryScreen extends StatelessWidget {
           child: ListView.builder(
               itemCount: 10,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        color: Colors.black,
-                        width: 120,
-                        height: 150,
-                      ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 10),
-                            const Text(
-                              "Book's Title Book's Title Book's Title Book's Title",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              "Writers Name",
-                              style: TextStyle(
-                                color: Colors.amber,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            dataRow("Rating", "5/5"),
-                            dataRow("Price", "2,000 K"),
-                            dataRow("Reading Progress", "80%"),
-                          ],
+                return GestureDetector(
+                  onTap: () async {
+                    Get.to(() => MainReader());
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          color: Colors.black,
+                          width: 120,
+                          height: 150,
                         ),
-                      )
-                    ],
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 10),
+                              const Text(
+                                "Book's Title Book's Title Book's Title Book's Title",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              const Text(
+                                "Writers Name",
+                                style: TextStyle(
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              dataRow("Rating", "5/5"),
+                              dataRow("Price", "2,000 K"),
+                              dataRow("Reading Progress", "80%"),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 );
               }),

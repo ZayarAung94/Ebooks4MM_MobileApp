@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String title = "EBooks4MM";
+  String title = "eBooks 4MM";
   Color buttonColor = Colors.deepOrange;
   int pageIndex = 2;
 
