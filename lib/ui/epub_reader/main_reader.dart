@@ -2,7 +2,8 @@ import 'package:ebooks4mm/ui/epub_reader/components/bookmark.dart';
 import 'package:ebooks4mm/ui/epub_reader/components/content.dart';
 import 'package:ebooks4mm/ui/epub_reader/components/view_control.dart';
 import 'package:ebooks4mm/ui/epub_reader/epub_helper.dart';
-import 'package:epub_view/epub_view.dart';
+import 'package:ebooks4mm/ui/models/chapter.dart';
+import 'package:epubx/epubx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
@@ -17,30 +18,64 @@ class _MainReaderState extends State<MainReader> {
   bool isLoading = true;
   String bookTitle = "Loading...";
   List<String> chapterContent = [];
-  List<String> chapterTitle = [];
+  List<EpubChapter> epubChapters = [];
   List<String> pages = [];
 
-  Future<void> loadEpub() async {
+  List<MainChapter> chapters = [];
+
+  Future loadEpub() async {
     EpubBook epubBook = await EpubHelper.getBook();
     bookTitle = epubBook.Title ?? "";
 
-    for (var chapter in epubBook.Chapters!) {
-      if (chapter.HtmlContent != null) chapterContent.add(chapter.HtmlContent!);
-      if (chapter.Title != null) chapterTitle.add(chapter.Title!);
+    int charCount = EpubHelper.getMixCharCount();
+
+    // Access the table of contents
+    List<EpubChapter>? toc = epubBook.Chapters;
+
+    // Print the TOC
+    if (toc != null) {
+      for (EpubChapter chapter in toc) {
+        if (chapter.HtmlContent != null) chapterContent.add(chapter.HtmlContent!);
+
+        List<SubChapter> subs = [];
+
+        if (chapter.SubChapters!.isEmpty) {
+          chapters.add(
+            MainChapter(
+              title: '${chapter.Title}',
+              link: '${chapter.ContentFileName}',
+              sub: [],
+            ),
+          );
+        } else {
+          chapter.SubChapters?.forEach((subChapter) {
+            subs.add(
+              SubChapter(
+                title: '${subChapter.Title}',
+                link: "${subChapter.ContentFileName}",
+              ),
+            );
+
+            MainChapter main = MainChapter(
+              title: '${chapter.Title}',
+              link: '${chapter.ContentFileName}',
+              sub: subs,
+            );
+
+            chapters.add(main);
+          });
+        }
+      }
     }
 
-    try {
-      int charCount = EpubHelper.getMixCharCount();
+    for (var text in chapterContent) {
+      List<String> p = EpubHelper.splitTextIntoPages(text, charCount);
+      pages.addAll(p);
+    }
 
-      for (var text in chapterContent) {
-        List<String> p = EpubHelper.splitTextIntoPages(text, charCount);
-        pages.addAll(p);
-      }
-
-      setState(() {
-        isLoading = false;
-      });
-    } catch (e) {}
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -91,7 +126,7 @@ class _MainReaderState extends State<MainReader> {
         ],
       ),
       drawer: TableOfContents(
-        table: chapterTitle,
+        table: chapters,
       ),
       body: isLoading
           ? Center(
