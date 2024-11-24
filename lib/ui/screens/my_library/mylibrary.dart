@@ -1,17 +1,11 @@
-import 'package:ebooks4mm/ui/epub_reader/main_reader.dart';
-import 'package:ebooks4mm/ui/widgets/loading_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MyLibraryScreen extends StatefulWidget {
+import '../../epub_reader/main_reader.dart';
+
+class MyLibraryScreen extends StatelessWidget {
   const MyLibraryScreen({super.key});
 
-  @override
-  State<MyLibraryScreen> createState() => _MyLibraryScreenState();
-}
-
-class _MyLibraryScreenState extends State<MyLibraryScreen> {
-  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -31,17 +25,8 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
                 itemCount: 10,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isLoading = true;
-                      });
+                    onTap: () async {
                       Get.to(() => MainReader());
-
-                      Future.delayed(Duration(seconds: 2), () {
-                        setState(() {
-                          isLoading = false;
-                        });
-                      });
                     },
                     behavior: HitTestBehavior.opaque,
                     child: Padding(
@@ -92,7 +77,6 @@ class _MyLibraryScreenState extends State<MyLibraryScreen> {
             )
           ],
         ),
-        if (isLoading) AppLoading.fullPageLoading(),
       ],
     );
   }

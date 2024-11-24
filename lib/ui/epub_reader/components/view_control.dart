@@ -74,11 +74,12 @@ class ViewControl extends StatelessWidget {
               selected: <int>{1},
             ),
             SizedBox(height: 10),
-            Text("Font Family"),
+            Text("Page Flipping"),
             SegmentedButton(
               // showSelectedIcon: false,
               segments: [
-                ButtonSegment(value: 0, label: Text("Pyidaungsu Myanmanr")),
+                ButtonSegment(value: 0, label: Text("Vertical")),
+                ButtonSegment(value: 1, label: Text("Horizontal")),
               ],
               selected: <int>{1},
             ),
