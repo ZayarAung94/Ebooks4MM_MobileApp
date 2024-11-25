@@ -154,8 +154,24 @@ class _MainReaderState extends State<MainReader> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("${index + 1} of ${pages.length + 1}"),
-                            Text("${(100 * index / pages.length).round()} %"),
+                            Text(
+                              "${index + 1} of ${pages.length + 1}",
+                              style: TextStyle(
+                                fontSize: 11,
+                              ),
+                            ),
+                            Text(
+                              "www.ebooks4mm.org",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              "${(100 * index / pages.length).round()} %",
+                              style: TextStyle(
+                                fontSize: 11,
+                              ),
+                            ),
                           ],
                         ),
                       )
@@ -177,11 +193,20 @@ class _MainReaderState extends State<MainReader> {
 
   Drawer drawer(PageController pageController) {
     return Drawer(
-      width: Get.size.width * 0.9,
+      width: Get.size.width * 0.9 < 500 ? Get.size.width * 0.9 : 500,
       child: SafeArea(
         child: Column(
           children: [
             SizedBox(height: 30),
+            Text(
+              "မာတိကာ",
+              style: TextStyle(
+                fontFamily: "MyanmarSabae",
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 15),
             Expanded(
               child: ListView.builder(
                 itemCount: chapters.length,
@@ -198,17 +223,46 @@ class _MainReaderState extends State<MainReader> {
                             pageController.jumpToPage(chapter.link);
                             Get.back();
                           },
-                          child: Text(
-                            chapter.title,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "MyanmarSabae",
-                            ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      chapter.title,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "MyanmarSabae",
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 50,
+                                    child: Text(
+                                      "${chapter.link + 1}",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: "MyanmarSabae",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 8),
+                                width: double.infinity,
+                                height: 1,
+                                color: Colors.grey,
+                              ),
+                            ],
                           ),
                         ),
                         ListView.builder(
                           shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: chapter.sub.length,
                           itemBuilder: (context, index) {
                             return Padding(
@@ -219,12 +273,40 @@ class _MainReaderState extends State<MainReader> {
                                   pageController.jumpToPage(chapter.sub[index].link);
                                   Get.back();
                                 },
-                                child: Text(
-                                  chapter.sub[index].title,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: "MyanmarSabae",
-                                  ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            chapter.sub[index].title,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: "MyanmarSabae",
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 50,
+                                          child: Text(
+                                            "${chapter.sub[index].link + 1}",
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: "MyanmarSabae",
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(vertical: 8),
+                                      width: double.infinity,
+                                      height: 1,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
                                 ),
                               ),
                             );
@@ -247,7 +329,9 @@ class _MainReaderState extends State<MainReader> {
       title: Text(
         bookTitle,
         style: TextStyle(
+          fontFamily: "MyanmarSabae",
           fontSize: 16,
+          fontWeight: FontWeight.bold,
         ),
       ),
       actions: [
