@@ -83,13 +83,10 @@ class EpubHelper {
   //   return result;
   // }
 
-  static int getMixCharCount() {
+  static int getMixCharCount(TextStyle textStyle) {
     // Get screen dimensions
     final double screenWidth = Get.width;
     final double screenHeight = Get.height;
-
-    // Define text style
-    const TextStyle textStyle = TextStyle(fontSize: 16);
 
     // Measure a single character's width and height
     final TextPainter textPainter = TextPainter(
@@ -103,7 +100,7 @@ class EpubHelper {
     // Calculate max characters per line and max lines per screen
     final int maxCharsPerLine = (screenWidth / charWidth).floor();
     final int maxLines = (screenHeight / charHeight).floor();
-    final int maxChars = maxCharsPerLine * (maxLines - 5);
+    final int maxChars = maxCharsPerLine * (maxLines + 5);
 
     return maxChars;
   }

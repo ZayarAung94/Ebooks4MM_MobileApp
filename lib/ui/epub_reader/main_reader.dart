@@ -3,6 +3,7 @@ import 'package:ebooks4mm/ui/epub_reader/components/bookmark.dart';
 import 'package:ebooks4mm/ui/epub_reader/components/view_control.dart';
 import 'package:ebooks4mm/ui/epub_reader/epub_helper.dart';
 import 'package:ebooks4mm/ui/epub_reader/models/chapter.dart';
+import 'package:ebooks4mm/ui/epub_reader/models/view_config.dart';
 import 'package:ebooks4mm/ui/widgets/loading_helper.dart';
 import 'package:epubx/epubx.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _MainReaderState extends State<MainReader> {
   List<String> pages = [];
   List<MainChapter> chapters = [];
 
-  final PageController _pageController = PageController();
+  ViewConfig viewConfig = ViewConfig();
 
   Future loadEpub() async {
     epubChapters = [];
@@ -35,7 +36,13 @@ class _MainReaderState extends State<MainReader> {
     EpubBook epubBook = await EpubHelper.getBook();
     bookTitle = epubBook.Title ?? "";
 
-    int charCount = EpubHelper.getMixCharCount();
+    int charCount = EpubHelper.getMixCharCount(
+      TextStyle(
+        fontFamily: "MyanmarSabae",
+        fontSize: viewConfig.fontSize.toDouble(),
+        height: viewConfig.lineHeight,
+      ),
+    );
 
     // Access the table of contents
     List<EpubChapter>? toc = epubBook.Chapters;
@@ -82,69 +89,80 @@ class _MainReaderState extends State<MainReader> {
 
   @override
   Widget build(BuildContext context) {
+    PageController pageController = PageController(initialPage: ViewConfigData.lastReadingPage);
+
     return FutureBuilder(
       future: loadEpub(),
       builder: (context, snap) {
         if (snap.connectionState == ConnectionState.done) {
-          return Scaffold(
-            appBar: epubAppBar(context),
-            drawer: drawer(),
-            body: PageView.builder(
-              controller: _pageController,
-              itemCount: pages.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        // child: Text(pages[index]),
-                        child: HtmlWidget(
-                          pages[index],
-                          renderMode: RenderMode.listView,
-                          customStylesBuilder: (element) {
-                            if (element.localName == "p") {
-                              return {
-                                'font-size': '15px',
-                                'line-height': '1.7',
-                              };
-                            }
-                            if (element.localName == "h1") {
-                              return {
-                                'font-size': '18px',
-                                'text-align': 'center',
-                              };
-                            }
-                            if (element.localName == "h2" || element.localName == "h3") {
-                              return {
-                                'font-size': '15px',
-                              };
-                            }
-                            if (element.localName == "title") {
-                              return {
-                                'display': 'none',
-                              };
-                            }
-                            return null;
-                          },
-                          enableCaching: true,
+          return Theme(
+            data: ViewConfigData.themeIndex == 2 ? ThemeData.dark() : ThemeData.light(),
+            child: Scaffold(
+              appBar: epubAppBar(context),
+              drawer: drawer(pageController),
+              body: PageView.builder(
+                controller: pageController,
+                itemCount: pages.length,
+                onPageChanged: (index) {
+                  ViewConfigData.lastReadingPage = index;
+                },
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          // child: Text(pages[index]),
+                          child: HtmlWidget(
+                            pages[index],
+                            renderMode: RenderMode.listView,
+                            customStylesBuilder: (element) {
+                              if (element.localName == "p") {
+                                return {
+                                  'font-size': '${viewConfig.fontSize}px',
+                                  'text-align': viewConfig.textAlign,
+                                };
+                              }
+                              if (element.localName == "h1") {
+                                return {
+                                  'font-size': '${viewConfig.fontSize + 2}px',
+                                  'text-align': 'center',
+                                };
+                              }
+                              if (element.localName == "h2" || element.localName == "h3") {
+                                return {
+                                  'font-size': '${viewConfig.fontSize}px',
+                                };
+                              }
+                              if (element.localName == "title") {
+                                return {
+                                  'display': 'none',
+                                };
+                              }
+                              return null;
+                            },
+                            textStyle: TextStyle(
+                              fontFamily: "MyanmarSabae",
+                              height: viewConfig.lineHeight,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      height: 50,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("${index + 1} of ${pages.length + 1}"),
-                          Text("${(100 * index / pages.length).round()} %"),
-                        ],
-                      ),
-                    )
-                  ],
-                );
-              },
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("${index + 1} of ${pages.length + 1}"),
+                            Text("${(100 * index / pages.length).round()} %"),
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                },
+              ),
             ),
           );
         } else {
@@ -157,7 +175,7 @@ class _MainReaderState extends State<MainReader> {
     );
   }
 
-  Drawer drawer() {
+  Drawer drawer(PageController pageController) {
     return Drawer(
       width: Get.size.width * 0.9,
       child: SafeArea(
@@ -177,7 +195,7 @@ class _MainReaderState extends State<MainReader> {
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () {
-                            _pageController.jumpToPage(chapter.link);
+                            pageController.jumpToPage(chapter.link);
                             Get.back();
                           },
                           child: Text(
@@ -185,6 +203,7 @@ class _MainReaderState extends State<MainReader> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "MyanmarSabae",
                             ),
                           ),
                         ),
@@ -197,13 +216,14 @@ class _MainReaderState extends State<MainReader> {
                               child: GestureDetector(
                                 behavior: HitTestBehavior.opaque,
                                 onTap: () {
-                                  _pageController.jumpToPage(chapter.sub[index].link);
+                                  pageController.jumpToPage(chapter.sub[index].link);
                                   Get.back();
                                 },
                                 child: Text(
                                   chapter.sub[index].title,
                                   style: TextStyle(
                                     fontSize: 15,
+                                    fontFamily: "MyanmarSabae",
                                   ),
                                 ),
                               ),
@@ -232,14 +252,20 @@ class _MainReaderState extends State<MainReader> {
       ),
       actions: [
         IconButton(
-          onPressed: () {
-            showModalBottomSheet(
+          onPressed: () async {
+            ViewConfig? value = await showModalBottomSheet(
               context: context,
               isScrollControlled: true,
               builder: (context) {
-                return const ViewControl();
+                return ViewControl();
               },
             );
+
+            if (value != null) {
+              setState(() {
+                viewConfig = value;
+              });
+            }
           },
           icon: Icon(Icons.font_download),
         ),

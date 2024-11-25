@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
-class BookmarkSheet extends StatelessWidget {
+class BookmarkSheet extends StatefulWidget {
   const BookmarkSheet({super.key});
 
+  @override
+  State<BookmarkSheet> createState() => _BookmarkSheetState();
+}
+
+class _BookmarkSheetState extends State<BookmarkSheet> {
+  int tabIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,7 +40,13 @@ class BookmarkSheet extends StatelessWidget {
                 ButtonSegment(value: 1, label: Text("Highlights")),
                 ButtonSegment(value: 2, label: Text("Notes")),
               ],
-              selected: <int>{1},
+              selected: <int>{tabIndex},
+              showSelectedIcon: false,
+              onSelectionChanged: (index) {
+                setState(() {
+                  tabIndex = index.first;
+                });
+              },
             ),
             const SizedBox(height: 30),
           ],
