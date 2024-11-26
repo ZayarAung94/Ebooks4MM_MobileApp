@@ -59,7 +59,13 @@ class BookDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         dataRow("Price", "20,000 K"),
+                        dataRow("Sold", "10,000"),
                         dataRow("File Size", "1.5 MB"),
+                        SizedBox(height: 10),
+                        AppBtn.normalBtn(
+                          color: AppColors.softBg,
+                          label: "Add to Watch List",
+                        )
                       ],
                     ),
                   )

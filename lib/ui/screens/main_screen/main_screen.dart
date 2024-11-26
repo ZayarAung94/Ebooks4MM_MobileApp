@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.softBg,
+        backgroundColor: Colors.blueGrey.shade900,
         leading: Padding(
           padding: const EdgeInsets.only(left: 20.0, bottom: 5, top: 5),
           child: const CircleAvatar(
@@ -64,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
           Text("Channels"),
           Text("Profile"),
         ],
-        color: AppColors.softBg,
+        color: Colors.blueGrey.shade900,
         circleColor: Colors.purple,
         height: 60,
         circleWidth: 50,
