@@ -55,34 +55,6 @@ class EpubHelper {
     return result;
   }
 
-  // static List<String> splitTextIntoPages(String text, int maxCount) {
-  //   List<String> result = [];
-  //   int start = 0;
-
-  //   while (start < text.length) {
-  //     // Determine the end index for the current chunk
-  //     int end = (start + maxCount < text.length) ? start + maxCount : text.length;
-
-  //     // Adjust the end index to avoid breaking a word
-  //     if (end < text.length && text[end] != ' ') {
-  //       int lastSpace = text.lastIndexOf(' ', end);
-  //       if (lastSpace > start) {
-  //         end = lastSpace;
-  //       }
-  //     }
-
-  //     String minText = text.substring(start, end).trim();
-
-  //     minText = "<p>$minText</p>";
-
-  //     // Add the chunk and move the start pointer
-  //     result.add(minText);
-  //     start = end + 1; // Skip the space after the chunk
-  //   }
-
-  //   return result;
-  // }
-
   static int getMixCharCount(TextStyle textStyle) {
     // Get screen dimensions
     final double screenWidth = Get.width;

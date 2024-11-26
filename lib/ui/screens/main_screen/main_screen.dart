@@ -33,7 +33,12 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.softBg,
-        leading: const Icon(Icons.bookmark_added_outlined),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20.0, bottom: 5, top: 5),
+          child: const CircleAvatar(
+            child: Image(image: AssetImage('assets/img/logo.png')),
+          ),
+        ),
         title: Text(
           title,
           style: const TextStyle(
@@ -74,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
             title = "My Libiary";
             buttonColor = AppColors.assent;
           } else if (index == 2) {
-            title = "EBooks4MM";
+            title = "eBooks 4MM";
             buttonColor = Colors.deepOrange;
           } else if (index == 3) {
             title = "Membership Channel";
