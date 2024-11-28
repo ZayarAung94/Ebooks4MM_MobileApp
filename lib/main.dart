@@ -1,5 +1,5 @@
+import 'package:ebooks4mm/ui/auth/login.dart';
 import 'package:ebooks4mm/ui/constant.dart';
-import 'package:ebooks4mm/ui/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
+      home: const LoginScreen(),
       theme: ThemeData.dark().copyWith(
         textTheme: ThemeData.dark().textTheme.apply(
               fontFamily: AppData.mmFont,

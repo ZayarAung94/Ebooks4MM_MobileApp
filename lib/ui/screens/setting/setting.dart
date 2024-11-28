@@ -91,6 +91,13 @@ class SettingScreen extends StatelessWidget {
               Get.dialog(LogoutDialog());
             },
           ),
+          // Card(
+          //   elevation: 10,
+          //   child: SizedBox(
+          //     height: 100,
+          //     width: double.infinity,
+          //   ),
+          // ),
           settingTitle("Control"),
           settingBtn(
             icon: Icons.monetization_on_outlined,
