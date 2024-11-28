@@ -1,5 +1,16 @@
 import 'package:ebooks4mm/ui/constant.dart';
+import 'package:ebooks4mm/ui/screens/setting/childs/about.dart';
+import 'package:ebooks4mm/ui/screens/setting/childs/following_writers.dart';
+import 'package:ebooks4mm/ui/screens/setting/childs/how_to_used.dart';
+import 'package:ebooks4mm/ui/screens/setting/childs/pravicy_policy.dart';
+import 'package:ebooks4mm/ui/screens/setting/childs/whitelist.dart';
+import 'package:ebooks4mm/ui/screens/setting/components/book_req_dialog.dart';
+import 'package:ebooks4mm/ui/screens/setting/components/customer_support.dart';
+import 'package:ebooks4mm/ui/screens/setting/components/download_dialog.dart';
+import 'package:ebooks4mm/ui/screens/setting/components/logout_dialog.dart';
+import 'package:ebooks4mm/ui/screens/setting/components/topup_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -73,17 +84,80 @@ class SettingScreen extends StatelessWidget {
             label: "Active Device",
             value: AppData.activeDevice,
           ),
-          settingBtn(icon: Icons.logout, label: "Logout"),
+          settingBtn(
+            icon: Icons.logout,
+            label: "Logout",
+            onTap: () {
+              Get.dialog(LogoutDialog());
+            },
+          ),
           settingTitle("Control"),
-          settingBtn(icon: Icons.monetization_on_outlined, label: "Top-up Money"),
-          settingBtn(icon: Icons.download_outlined, label: "Download My Own Books"),
-          settingBtn(icon: Icons.star_border_purple500, label: "White List"),
-          settingBtn(icon: Icons.favorite_outline, label: "Following Writers"),
-          settingBtn(icon: Icons.request_page_outlined, label: "Request Book"),
+          settingBtn(
+            icon: Icons.monetization_on_outlined,
+            label: "Top-up Money",
+            onTap: () {
+              Get.bottomSheet(TopupSheet());
+            },
+          ),
+          settingBtn(
+            icon: Icons.download_outlined,
+            label: "Download My Own Books",
+            onTap: () {
+              Get.dialog(
+                DownloadOwnBookDialog(),
+              );
+            },
+          ),
+          settingBtn(
+            icon: Icons.star_border_purple500,
+            label: "White List",
+            onTap: () {
+              Get.to(() => WhiteListScreen());
+            },
+          ),
+          settingBtn(
+            icon: Icons.favorite_outline,
+            label: "Following Writers",
+            onTap: () {
+              Get.to(() => FollowingWritersScreen());
+            },
+          ),
+          settingBtn(
+            icon: Icons.request_page_outlined,
+            label: "Request Book",
+            onTap: () {
+              Get.dialog(BookReqDialog());
+            },
+          ),
           settingTitle("About"),
-          settingBtn(icon: Icons.movie, label: "How to Used!"),
-          settingBtn(icon: Icons.abc_outlined, label: "About EBooks 4MM"),
-          settingBtn(icon: Icons.policy_outlined, label: "Pravicy Policy"),
+          settingBtn(
+            icon: Icons.support_agent_outlined,
+            label: "Customer Services",
+            onTap: () {
+              Get.bottomSheet(CustomerSupport());
+            },
+          ),
+          settingBtn(
+            icon: Icons.movie,
+            label: "How to Used!",
+            onTap: () {
+              Get.to(() => HowToUsedScreen());
+            },
+          ),
+          settingBtn(
+            icon: Icons.abc_outlined,
+            label: "About EBooks 4MM",
+            onTap: () {
+              Get.to(() => AboutScreen());
+            },
+          ),
+          settingBtn(
+            icon: Icons.policy_outlined,
+            label: "Pravicy Policy",
+            onTap: () {
+              Get.to(() => PravicyPolicyScreen());
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(30.0),
             child: Text("Version : 1.001 (Beta)"),
@@ -126,9 +200,11 @@ class SettingScreen extends StatelessWidget {
   GestureDetector settingBtn({
     required IconData icon,
     required String label,
+    void Function()? onTap,
     String? value,
   }) {
     return GestureDetector(
+      onTap: onTap,
       child: Card(
         margin: EdgeInsets.only(
           left: 8,

@@ -1,3 +1,4 @@
+import 'package:ebooks4mm/ui/constant.dart';
 import 'package:ebooks4mm/ui/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -16,7 +17,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const MainScreen(),
-      theme: ThemeData.dark(),
+      theme: ThemeData.dark().copyWith(
+        textTheme: ThemeData.dark().textTheme.apply(
+              fontFamily: AppData.mmFont,
+            ),
+        primaryTextTheme: ThemeData.dark().textTheme.apply(
+              fontFamily: AppData.mmFont,
+            ),
+      ),
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(

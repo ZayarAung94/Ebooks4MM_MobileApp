@@ -56,8 +56,8 @@ class BooksGroup extends StatelessWidget {
                           color: Colors.black,
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          'Books Title Books Title Books Title',
+                        Text(
+                          "Myanmar နာမည် အကောင်းဆုံး",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

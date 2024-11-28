@@ -17,4 +17,6 @@ class AppData {
   static String phone = "+95 9 405030798";
   static String balance = "100,000";
   static String activeDevice = "Huewei P30 Lite";
+
+  static String mmFont = "MyanmarSabae";
 }
