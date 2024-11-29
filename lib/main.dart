@@ -1,10 +1,19 @@
 import 'package:ebooks4mm/ui/auth/login.dart';
 import 'package:ebooks4mm/ui/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
+
+  await Supabase.initialize(
+    url: dotenv.env['BASE_URL']!,
+    anonKey: dotenv.env['API_KEY']!,
+  );
 
   runApp(const MyApp());
 }

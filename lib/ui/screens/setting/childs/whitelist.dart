@@ -10,9 +10,13 @@ class WhiteListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Book> whitelistBooks = [
-      Book(name: 'Books Name Books Name Book Name Book Name', author: ["author"], price: 10000),
-      Book(name: 'Books Name Books Name Book Name Book Name', author: ["author"], price: 10000),
-      Book(name: 'Books Name Books Name Book Name Book Name', author: ["author"], price: 10000),
+      Book(
+        id: 1,
+        name: 'Books Name Books Name Book Name Book Name',
+        authors: ["author"],
+        coverImg: "",
+        price: 10000,
+      ),
     ];
 
     return Scaffold(
@@ -59,7 +63,7 @@ class WhiteListScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            book.author[0],
+                            book.authors[0],
                             style: TextStyle(
                               fontFamily: "MyanmarSabae",
                               color: Colors.amber,
