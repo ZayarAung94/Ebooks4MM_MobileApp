@@ -1,6 +1,7 @@
 import 'package:ebooks4mm/models/book.dart';
 import 'package:ebooks4mm/ui/child_screens/book_detail.dart';
 import 'package:ebooks4mm/ui/constant.dart';
+import 'package:ebooks4mm/ui/demo_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +34,7 @@ class WhiteListScreen extends StatelessWidget {
             Book book = whitelistBooks[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => BookDetail());
+                Get.to(() => BookDetail(book: DefaultData.book()));
               },
               behavior: HitTestBehavior.opaque,
               child: Padding(
