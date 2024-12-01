@@ -1,3 +1,5 @@
+import 'package:ebooks4mm/api/auth.dart';
+import 'package:ebooks4mm/ui/auth/opt_login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -88,7 +90,27 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 20),
               MaterialButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  final String email = emailController.text.trim();
+                  final String passwd = passwdController.text.trim();
+                  final String name = nameController.text.trim();
+                  final String phone = phoneController.text.trim();
+
+                  if (isLoading) {
+                    setState(() {
+                      isLoading = false;
+                    });
+
+                    await Auth().register(
+                      email: email,
+                      passwd: passwd,
+                      name: name,
+                      phone: phone,
+                    );
+
+                    Get.to(() => OptLogin(email: email));
+                  }
+                },
                 color: Colors.blue,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(

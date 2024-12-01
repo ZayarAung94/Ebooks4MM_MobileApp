@@ -1,3 +1,4 @@
+import 'package:ebooks4mm/models/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -17,6 +18,8 @@ class AppData {
   static String phone = "+95 9 405030798";
   static String balance = "100,000";
   static String activeDevice = "Huewei P30 Lite";
+
+  static Profile? user;
 
   static String mmFont = "MyanmarSabae";
 }

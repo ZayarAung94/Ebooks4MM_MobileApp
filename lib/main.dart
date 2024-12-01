@@ -1,5 +1,7 @@
+import 'package:ebooks4mm/api/user_controller.dart';
 import 'package:ebooks4mm/ui/auth/login.dart';
 import 'package:ebooks4mm/ui/constant.dart';
+import 'package:ebooks4mm/ui/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -15,6 +17,11 @@ void main() async {
     anonKey: dotenv.env['API_KEY']!,
   );
 
+  final user = Supabase.instance.client.auth.currentUser;
+  if (user != null) {
+    await UserController().loadUser(user.id);
+  }
+
   runApp(const MyApp());
 }
 
@@ -25,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home: AppData.user == null ? const LoginScreen() : MainScreen(),
       theme: ThemeData.dark().copyWith(
         textTheme: ThemeData.dark().textTheme.apply(
               fontFamily: AppData.mmFont,

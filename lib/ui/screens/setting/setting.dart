@@ -1,3 +1,4 @@
+import 'package:ebooks4mm/models/profile/profile.dart';
 import 'package:ebooks4mm/ui/constant.dart';
 import 'package:ebooks4mm/ui/screens/setting/childs/about.dart';
 import 'package:ebooks4mm/ui/screens/setting/childs/following_writers.dart';
@@ -17,6 +18,7 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Profile user = AppData.user!;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -34,7 +36,7 @@ class SettingScreen extends StatelessWidget {
                   SizedBox(height: 10),
                   Text.rich(
                     TextSpan(
-                      text: AppData.balance,
+                      text: "${user.balance}",
                       style: TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.bold,
@@ -55,8 +57,8 @@ class SettingScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      dashData("Own Books : 20"),
-                      dashData("Finished : 10"),
+                      dashData("Own Books : ${user.own_books}"),
+                      dashData("Finished : ${user.finished_books}"),
                     ],
                   )
                 ],
@@ -67,22 +69,22 @@ class SettingScreen extends StatelessWidget {
           settingBtn(
             icon: Icons.person_2_rounded,
             label: "Name",
-            value: AppData.userName,
+            value: user.name,
           ),
           settingBtn(
             icon: Icons.email,
             label: "E-mail",
-            value: AppData.email,
+            value: user.email,
           ),
           settingBtn(
             icon: Icons.phone,
             label: "Phone",
-            value: AppData.phone,
+            value: user.phone,
           ),
           settingBtn(
             icon: Icons.phone_android_outlined,
             label: "Active Device",
-            value: AppData.activeDevice,
+            value: user.device,
           ),
           settingBtn(
             icon: Icons.logout,
