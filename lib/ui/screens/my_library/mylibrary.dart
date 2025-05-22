@@ -20,14 +20,6 @@ class MyLibraryScreen extends StatelessWidget {
       children: [
         Column(
           children: [
-            const Card(
-              margin: EdgeInsets.all(8.0),
-              elevation: 10,
-              child: SizedBox(
-                height: 150,
-                width: double.infinity,
-              ),
-            ),
             Expanded(
               child: FutureBuilder(
                 future: loadEpub(),
@@ -90,7 +82,7 @@ class MyLibraryScreen extends StatelessWidget {
                       },
                     );
                   } else {
-                    return Text("Loading...");
+                    return Center(child: Text("Loading..."));
                   }
                 },
               ),

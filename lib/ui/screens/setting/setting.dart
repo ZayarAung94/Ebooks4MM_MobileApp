@@ -4,7 +4,6 @@ import 'package:ebooks4mm/ui/screens/setting/childs/about.dart';
 import 'package:ebooks4mm/ui/screens/setting/childs/following_writers.dart';
 import 'package:ebooks4mm/ui/screens/setting/childs/how_to_used.dart';
 import 'package:ebooks4mm/ui/screens/setting/childs/pravicy_policy.dart';
-import 'package:ebooks4mm/ui/screens/setting/childs/whitelist.dart';
 import 'package:ebooks4mm/ui/screens/setting/components/book_req_dialog.dart';
 import 'package:ebooks4mm/ui/screens/setting/components/customer_support.dart';
 import 'package:ebooks4mm/ui/screens/setting/components/download_dialog.dart';
@@ -118,13 +117,6 @@ class SettingScreen extends StatelessWidget {
             },
           ),
           settingBtn(
-            icon: Icons.star_border_purple500,
-            label: "White List",
-            onTap: () {
-              Get.to(() => WhiteListScreen());
-            },
-          ),
-          settingBtn(
             icon: Icons.favorite_outline,
             label: "Following Writers",
             onTap: () {
@@ -197,7 +189,7 @@ class SettingScreen extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -230,24 +222,23 @@ class SettingScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Icon(icon),
-                      SizedBox(width: 15),
-                      Text(
-                        label,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
+                Row(
+                  children: [
+                    Icon(icon),
+                    SizedBox(width: 15),
+                    Text(
+                      label,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: value == null ? 50 : 200,
+                SizedBox(width: 30),
+                Flexible(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -257,7 +248,9 @@ class SettingScreen extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.end,
                           maxLines: 1,
-                          style: TextStyle(),
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       SizedBox(

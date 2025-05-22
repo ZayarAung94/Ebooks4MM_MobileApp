@@ -4,7 +4,7 @@ import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:ebooks4mm/ui/child_screens/notification.dart';
 import 'package:ebooks4mm/ui/constant.dart';
 import 'package:ebooks4mm/ui/screens/channel/channel.dart';
-import 'package:ebooks4mm/ui/screens/home/home.dart';
+
 import 'package:ebooks4mm/ui/screens/my_library/mylibrary.dart';
 import 'package:ebooks4mm/ui/screens/setting/setting.dart';
 import 'package:ebooks4mm/ui/screens/shop/shop.dart';
@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> pages = [
     const ShopScreen(),
     const MyLibraryScreen(),
-    const HomeScreen(),
+    const ShopScreen(),
     const ChannelScreen(),
     const SettingScreen(),
   ];
@@ -103,13 +103,13 @@ class _MainScreenState extends State<MainScreen> {
           ],
           inactiveIcons: const [
             Text("Shop"),
-            Text("My Books"),
-            Text("Home"),
+            Text("Library"),
+            Text("Shop"),
             Text("Channels"),
             Text("Profile"),
           ],
           color: Colors.blueGrey.shade900,
-          circleColor: Colors.purple,
+          circleColor: Colors.blueGrey.shade800,
           height: 60,
           circleWidth: 50,
           activeIndex: pageIndex,

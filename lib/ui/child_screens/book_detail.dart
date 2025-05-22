@@ -1,3 +1,4 @@
+import 'package:ebooks4mm/temp_data/books.dart';
 import 'package:ebooks4mm/ui/constant.dart';
 import 'package:ebooks4mm/ui/widgets/books_group.dart';
 import 'package:ebooks4mm/ui/widgets/btn_helper.dart';
@@ -35,7 +36,7 @@ class BookDetail extends StatelessWidget {
                 children: [
                   Container(
                     color: Colors.black,
-                    width: 170,
+                    width: 150,
                     height: 200,
                     child: Image.network(
                       book.coverImg,
@@ -65,13 +66,10 @@ class BookDetail extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        dataRow("Price", "${book.price} K"),
+                        dataRow("Price", "${book.price} Ks"),
                         dataRow("Sold", "${book.sold}"),
-                        SizedBox(height: 30),
-                        AppBtn.normalBtn(
-                          color: AppColors.softBg,
-                          label: "Add to Watch List",
-                        )
+                        SizedBox(height: 10),
+                        ratingWidget()
                       ],
                     ),
                   )
@@ -95,6 +93,11 @@ class BookDetail extends StatelessWidget {
                       label: "Demo Read",
                     ),
                   ),
+                  const SizedBox(width: 5),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.favorite_border_outlined),
+                  )
                 ],
               ),
             ),
@@ -106,7 +109,10 @@ class BookDetail extends StatelessWidget {
                 children: [
                   AppText.header1("Summary"),
                   const SizedBox(height: 8),
-                  Text(book.summary),
+                  Text(
+                    book.summary,
+                    style: TextStyle(height: 1.5),
+                  ),
                 ],
               ),
             ),
@@ -134,10 +140,43 @@ class BookDetail extends StatelessWidget {
             if (book.distributers != null) bookData("Distributer", "${book.distributers}"),
             const SizedBox(height: 20),
             const Divider(),
-            const BooksGroup(title: "Relative Books")
+            BooksGroup(
+              title: "Relative Books",
+              books: TempBooks.lastBooks,
+            )
           ],
         ),
       ),
+    );
+  }
+
+  Widget ratingWidget() {
+    return Column(
+      children: [
+        ratingRow(star: 5, count: "12"),
+        ratingRow(star: 2, count: "5"),
+        ratingRow(star: 1, count: '2'),
+      ],
+    );
+  }
+
+  Row ratingRow({
+    required int star,
+    String? count,
+  }) {
+    return Row(
+      children: [
+        Icon(star > 0 ? Icons.star : Icons.star_outline, size: 14),
+        Icon(star > 1 ? Icons.star : Icons.star_outline, size: 14),
+        Icon(star > 2 ? Icons.star : Icons.star_outline, size: 14),
+        Icon(star > 3 ? Icons.star : Icons.star_outline, size: 14),
+        Icon(star > 4 ? Icons.star : Icons.star_outline, size: 14),
+        SizedBox(width: 10),
+        Text(
+          count ?? "0",
+          style: TextStyle(fontSize: 12),
+        ),
+      ],
     );
   }
 

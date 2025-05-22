@@ -1,9 +1,11 @@
 import 'package:ebooks4mm/models/book.dart';
 import 'package:ebooks4mm/ui/child_screens/book_detail.dart';
 import 'package:ebooks4mm/ui/demo_data.dart';
+import 'package:ebooks4mm/ui/widgets/books_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../child_screens/books_grid.dart' show BooksGrid;
 import 'text_helper.dart';
 
 class BooksGroup extends StatelessWidget {
@@ -27,10 +29,15 @@ class BooksGroup extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText.header1(title),
-                const Text(
-                  "See More",
-                  style: TextStyle(
-                    color: Colors.deepOrange,
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => BooksGrid());
+                  },
+                  child: const Text(
+                    "See More >>",
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ],
@@ -45,65 +52,7 @@ class BooksGroup extends StatelessWidget {
                 Book book = books![index];
                 return Padding(
                   padding: EdgeInsets.only(left: index == 0 ? 8.0 : 0),
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      Get.to(() => BookDetail(book: book));
-                    },
-                    child: Container(
-                      width: 170,
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 200,
-                            width: 170,
-                            color: Colors.black,
-                            child: Image.network(
-                              book.coverImg,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            book.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            book.authors.first,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 11,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.deepOrange,
-                                size: 17,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                "${book.price} K",
-                                style: TextStyle(fontSize: 13),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  child: BookCard(book: book),
                 );
               },
             ),

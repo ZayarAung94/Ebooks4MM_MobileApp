@@ -44,12 +44,12 @@ class ShopScreen extends StatelessWidget {
                     ),
                   ),
                   BooksGroup(
-                    title: 'Best Seller',
-                    books: TempBooks.bestSeller,
-                  ),
-                  BooksGroup(
                     title: 'Last Update',
                     books: TempBooks.lastBooks,
+                  ),
+                  BooksGroup(
+                    title: 'Best Seller',
+                    books: TempBooks.bestSeller,
                   ),
                   BooksGroup(
                     title: 'Promotions',
