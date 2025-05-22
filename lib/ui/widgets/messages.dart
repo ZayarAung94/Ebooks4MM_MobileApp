@@ -20,7 +20,7 @@ class AppMessage {
         message,
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         duration: const Duration(milliseconds: 3000),
-        backgroundColor: Colors.red.withOpacity(0.3),
+        backgroundColor: Colors.red[200],
         colorText: Colors.white,
       );
     }

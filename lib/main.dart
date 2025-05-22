@@ -1,11 +1,12 @@
 import 'package:ebooks4mm/api/user_controller.dart';
-import 'package:ebooks4mm/ui/auth/login.dart';
 import 'package:ebooks4mm/ui/constant.dart';
 import 'package:ebooks4mm/ui/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'ui/auth/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -23,7 +23,7 @@ class UserController {
     try {
       await userTb.insert(user.toJson());
 
-      await loadUser(user.id);
+      AppData.user = user;
     } catch (e) {
       AppMessage.error("Something is wrong on created account!");
     }

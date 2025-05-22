@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppLoading {
   static Widget fullPageLoading() {
     return Container(
-      color: Colors.black.withOpacity(0.8),
+      color: Colors.black,
       child: Center(
         child: Container(
           height: 100,
